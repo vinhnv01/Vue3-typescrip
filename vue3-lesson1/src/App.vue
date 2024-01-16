@@ -20,8 +20,8 @@
   import AppTodoList from "./components/AppTodoList.vue";
   import AppFooter from "./components/AppFooter.vue";
   import AppAddTodo from "./components/AppAddTodo.vue";
-  import { Todo } from "./types/todo";
   import { Filter } from "./types/filter";
+  import { Todo } from "./types/todo";
 
   // tạo 1 interface để trả về đúng kiểu dữ liệu -> ở đây là trả về 1 list
   interface State {

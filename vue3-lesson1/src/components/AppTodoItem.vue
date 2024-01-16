@@ -15,8 +15,8 @@
 </template>
 
 <script lang="ts">
-  import { PropType } from "vue";
   import { Todo } from "@/types/todo";
+  import { PropType } from "vue";
   export default {
     props: {
       todo: {
