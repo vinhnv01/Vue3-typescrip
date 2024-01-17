@@ -1,6 +1,7 @@
 <script setup lang="ts">
-  import { ref } from "vue";
-  import ProductInterface from "../types/Product";
+  import { ProductInterface } from "@/types/ProductInterface";
+  import { onMounted, ref } from "vue";
+  import { RouterLink } from "vue-router";
 
   /**
    * Product
@@ -16,20 +17,61 @@
   const listProduct = ref<ProductInterface[]>([]);
   const newProduct = ref<ProductInterface>({});
 
+  function loadData() {
+    fetch("http://localhost:3000/product")
+      .then((response) => response.json())
+      .then((data) => {
+        // lấy dữ liệu
+        listProduct.value = data;
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }
+
+  onMounted(() => {
+    loadData();
+  });
+
   function addProduct() {
-    listProduct.value.push({
-      id: Date.now().toString(),
-      name: newProduct.value.name,
-      url: newProduct.value.url,
-      price: newProduct.value.price,
-      note: newProduct.value.note,
-      status: newProduct.value.status,
-    });
+    const add = { ...newProduct.value, id: Date.now().toString() };
+
+    fetch("http://localhost:3000/product", {
+      method: "POST",
+      body: JSON.stringify(add),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        listProduct.value.push(data);
+        newProduct.value = {};
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }
+
+  function deleteProduct(id: string) {
+    fetch(`http://localhost:3000/product/${id}`, {
+      method: "DELETE",
+    })
+      .then(() => {
+        const index = listProduct.value.findIndex((item) => item.id === id);
+        if (index !== -1) {
+          listProduct.value.splice(index, 1);
+        }
+      })
+      .catch((error) => {
+        console.error("Error deleting product:", error);
+      });
+  }
+
+  function detailProduct(id: string) {
+    newProduct.value = { ...listProduct.value.find((item) => item.id === id) };
   }
 </script>
 
 <template>
-  <main>
+  <div>
     <h1>Quản lý sản phẩm</h1>
     <form @submit.prevent="addProduct">
       <div class="mb-3 row">
@@ -83,10 +125,10 @@
           </select>
         </div>
       </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit" class="btn btn-primary">ADD</button>
 
       <!-- hiển thị danh sách -->
-      <table class="table table-striped table-hover">
+      <table class="table table-striped">
         <thead>
           <tr>
             <th scope="col">ID</th>
@@ -95,6 +137,7 @@
             <th scope="col">Giá bán</th>
             <th scope="col">Mô tả</th>
             <th scope="col">Trạng thái</th>
+            <th scope="col">Hành động</th>
           </tr>
         </thead>
         <tbody>
@@ -105,11 +148,36 @@
             <td>{{ product.price }}</td>
             <td>{{ product.note }}</td>
             <td>{{ product.status }}</td>
+            <td>
+              <button
+                type="button"
+                @click="detailProduct(product.id)"
+                class="btn btn-warning"
+                style="margin-left: 15px"
+              >
+                Detail
+              </button>
+              <RouterLink
+                type="button"
+                :to="{ name: 'update-product', params: { id: product.id } }"
+                class="btn btn-secondary"
+                style="margin-left: 15px"
+                >Update</RouterLink
+              >
+              <button
+                type="button"
+                @click="deleteProduct(product.id)"
+                class="btn btn-danger"
+                style="margin-left: 15px"
+              >
+                Delete
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
     </form>
-  </main>
+  </div>
 </template>
 <style>
   .image-product {

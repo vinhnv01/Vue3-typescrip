@@ -5,12 +5,23 @@
 <template>
   <div>
     <header>
-      <div class="wrapper">
-        <nav>
-          <RouterLink to="/">Home</RouterLink>
-          <RouterLink to="/about">About</RouterLink>
-        </nav>
-      </div>
+      <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+          <RouterLink to="/" class="btn btn-info">Home</RouterLink>
+          <RouterLink to="/about" class="btn btn-info">About</RouterLink>
+          <form class="d-flex">
+            <input
+              class="form-control me-2"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+            />
+            <button class="btn btn-outline-success" type="submit">
+              Search
+            </button>
+          </form>
+        </div>
+      </nav>
     </header>
     <RouterView />
   </div>

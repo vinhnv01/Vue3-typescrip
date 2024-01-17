@@ -1,0 +1,36 @@
+{
+  "product": [
+    {
+      "id": "1",
+      "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-ebS1b2vbgyl2T9jt1thKgvGv3cEr1pKllg&usqp=CAU",
+      "name": "Iphone 11",
+      "price": 10000000,
+      "note": "Iphone mới ",
+      "status": "KINH_DOANH"
+    },
+    {
+      "id": "2",
+      "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-ebS1b2vbgyl2T9jt1thKgvGv3cEr1pKllg&usqp=CAU",
+      "name": "Iphone 12",
+      "price": 12000000,
+      "note": "Iphone mới ",
+      "status": "KINH_DOANH"
+    },
+    {
+      "id": "3",
+      "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-ebS1b2vbgyl2T9jt1thKgvGv3cEr1pKllg&usqp=CAU",
+      "name": "Iphone 16",
+      "price": 13000000,
+      "note": "Iphone mới nhất",
+      "status": "KICH_HOAT"
+    },
+    {
+      "id": "1705477161042",
+      "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWp_UAxWOjWjaMuQ8HKH7DMRHFo5nUH7iMxg&usqp=CAU",
+      "name": "iphone 12",
+      "price": 1111111111,
+      "note": "ádas",
+      "status": "KICH_HOAT"
+    }
+  ]
+}
