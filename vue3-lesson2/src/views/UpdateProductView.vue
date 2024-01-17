@@ -1,4 +1,5 @@
 <script setup lang="ts">
+  import { ProductAPI } from "@/api/ProductAPI";
   import { ProductInterface } from "@/types/ProductInterface";
   import { onMounted, ref } from "vue";
   import { useRoute, useRouter } from "vue-router";
@@ -7,6 +8,7 @@
   const route = useRoute();
   const productId = ref<string>("");
 
+  // https://learnvue.co/articles/vue-lifecycle-hooks-guide
   onMounted(() => {
     // Truy cập ID sản phẩm từ Route.params
     productId.value = route.params.id;
@@ -18,13 +20,9 @@
   const newProduct = ref<ProductInterface>({});
 
   function detailProduct(id: string) {
-    fetch(`http://localhost:3000/product/${id}`, {
-      method: "GET",
-    })
-      .then((response) => response.json())
+    ProductAPI.getOne(id)
       .then((data) => {
-        newProduct.value = data;
-        console.log(data);
+        newProduct.value = data.data;
       })
       .catch((error) => {
         console.error("Error deleting product:", error);
@@ -32,11 +30,8 @@
   }
 
   function updateProduct() {
-    const data = { ...newProduct.value };
-    fetch(`http://localhost:3000/product/${productId.value}`, {
-      method: "PUT",
-      body: JSON.stringify(data),
-    })
+    const update = { ...newProduct.value, id: productId.value };
+    ProductAPI.update(update)
       .then(() => {
         router.push({ name: "home" });
       })

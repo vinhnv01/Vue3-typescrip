@@ -2,6 +2,7 @@
   import { ProductInterface } from "@/types/ProductInterface";
   import { onMounted, ref } from "vue";
   import { RouterLink } from "vue-router";
+  import { ProductAPI } from "@/api/ProductAPI";
 
   /**
    * Product
@@ -18,11 +19,10 @@
   const newProduct = ref<ProductInterface>({});
 
   function loadData() {
-    fetch("http://localhost:3000/product")
-      .then((response) => response.json())
+    ProductAPI.fetchAll()
       .then((data) => {
         // lấy dữ liệu
-        listProduct.value = data;
+        listProduct.value = data.data;
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -36,13 +36,9 @@
   function addProduct() {
     const add = { ...newProduct.value, id: Date.now().toString() };
 
-    fetch("http://localhost:3000/product", {
-      method: "POST",
-      body: JSON.stringify(add),
-    })
-      .then((response) => response.json())
+    ProductAPI.create(add)
       .then((data) => {
-        listProduct.value.push(data);
+        listProduct.value.push(data.data);
         newProduct.value = {};
       })
       .catch((error) => {
@@ -51,9 +47,7 @@
   }
 
   function deleteProduct(id: string) {
-    fetch(`http://localhost:3000/product/${id}`, {
-      method: "DELETE",
-    })
+    ProductAPI.delete(id)
       .then(() => {
         const index = listProduct.value.findIndex((item) => item.id === id);
         if (index !== -1) {
