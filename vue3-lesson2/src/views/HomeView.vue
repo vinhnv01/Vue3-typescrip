@@ -3,6 +3,7 @@
   import { onMounted, ref } from "vue";
   import { RouterLink } from "vue-router";
   import { ProductAPI } from "@/api/ProductAPI";
+  import { toast } from "vue3-toastify";
 
   /**
    * Product
@@ -38,6 +39,7 @@
 
     ProductAPI.create(add)
       .then((data) => {
+        toast.success("Thêm thành công");
         listProduct.value.push(data.data);
         newProduct.value = {};
       })

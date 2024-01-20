@@ -6,7 +6,7 @@
       "name": "Iphone 11",
       "price": 10000000,
       "note": "Iphone mới ",
-      "status": "KINH_DOANH"
+      "status": "KICH_HOAT"
     },
     {
       "id": "2",
@@ -37,6 +37,22 @@
       "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqhUXQsrLKtjBw-KpZxMsC3KDBEkzgizGm9w&usqp=CAU",
       "name": "Iphone 1644",
       "price": 13000000,
+      "note": "Iphone mới nhất",
+      "status": "KICH_HOAT"
+    },
+    {
+      "id": "1705484058429",
+      "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWp_UAxWOjWjaMuQ8HKH7DMRHFo5nUH7iMxg&usqp=CAU",
+      "name": "iphone 1555",
+      "price": 22300000,
+      "note": "Iphone mới nhất",
+      "status": "KICH_HOAT"
+    },
+    {
+      "id": "1705484515899",
+      "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-ebS1b2vbgyl2T9jt1thKgvGv3cEr1pKllg&usqp=CAU",
+      "name": "Iphone 1644",
+      "price": 22300000,
       "note": "Iphone mới nhất",
       "status": "KICH_HOAT"
     }

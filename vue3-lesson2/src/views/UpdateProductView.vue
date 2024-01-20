@@ -3,6 +3,7 @@
   import { ProductInterface } from "@/types/ProductInterface";
   import { onMounted, ref } from "vue";
   import { useRoute, useRouter } from "vue-router";
+  import { toast } from "vue3-toastify";
 
   const router = useRouter();
   const route = useRoute();
@@ -34,6 +35,7 @@
     ProductAPI.update(update)
       .then(() => {
         router.push({ name: "home" });
+        toast.success("Update thành công");
       })
       .catch((error) => {
         console.error("Error deleting product:", error);
