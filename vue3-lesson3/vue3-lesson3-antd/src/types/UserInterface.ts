@@ -2,7 +2,9 @@ export interface UserInterface {
   id?: string;
   avatar?: string;
   name?: string;
-  dateOfBirth?: string;
+  email?: string;
+  password?: string;
+  dateOfBirth?: number | string;
   gender?: GenDerUser;
   address?: string;
   status?: StatusUser;

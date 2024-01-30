@@ -53,7 +53,7 @@
 <script lang="ts" setup>
   import { VueElement, h, reactive, ref } from "vue";
   import {
-    MailOutlined,
+    UsergroupAddOutlined,
     AppstoreOutlined,
     SettingOutlined,
     MenuUnfoldOutlined,
@@ -79,7 +79,7 @@
   }
 
   const items: ItemType[] = reactive([
-    getItem("Người dùng", "view-user", () => h(MailOutlined)),
+    getItem("Người dùng", "view-user", () => h(UsergroupAddOutlined)),
     getItem("Navigation Two", "sub2", () => h(AppstoreOutlined), [
       getItem("Option 5", "5"),
       getItem("Option 6", "6"),

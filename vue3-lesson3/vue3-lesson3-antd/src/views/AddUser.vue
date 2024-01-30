@@ -28,10 +28,10 @@
             "
           >
             <h1 style="font-size: 18px; text-align: center">Ảnh</h1>
-            <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTrku1byXzqV3rAtstGGrZ6H-8BuRwYgpKVxXExsNz25ASBSop_yumFYddcTeEArLkBws&usqp=CAU"
-              alt=""
-              style="width: 200px; height: 200px; border-radius: 50%"
+            <UploadImage
+              :fileList="fileList"
+              @handlePreview="handlePreview"
+              @file-uploaded="handleFileUpload"
             />
           </a-card>
         </a-col>
@@ -44,15 +44,6 @@
               <!-- cột 1 -->
               <a-col span="12">
                 <a-form-item
-                  label="Avatar"
-                  name="avatar"
-                  :rules="[
-                    { required: true, message: 'Vui lòng nhập họ và tên!' },
-                  ]"
-                >
-                  <a-input v-model:value="formState.avatar" />
-                </a-form-item>
-                <a-form-item
                   name="dateOfBirth"
                   label="Ngày sinh"
                   :rules="[
@@ -64,6 +55,13 @@
                     value-format="DD-MM-YYYY"
                     style="width: 100%"
                   />
+                </a-form-item>
+                <a-form-item
+                  label="Email"
+                  name="email"
+                  :rules="[{ required: true, message: 'Vui lòng nhập Email!' }]"
+                >
+                  <a-input v-model:value="formState.email" />
                 </a-form-item>
                 <a-form-item
                   label="Địa chỉ"
@@ -124,6 +122,7 @@
         </a-col>
       </a-row>
     </a-form>
+    <LoadingComponent :loading="loading" />
   </div>
 </template>
 
@@ -132,14 +131,38 @@
   import { UserAPI } from "@/api/UserAPI";
   import { useRouter } from "vue-router";
   import { ref } from "vue";
+  import moment from "moment";
+  import UploadImage from "@/util/UploadImage.vue";
+  import LoadingComponent from "@/util/LoadingComponent.vue";
 
   const router = useRouter();
   const formState = ref<UserInterface>({});
+  const loading = ref(false);
+
+  // upload ảnh
+  const fileImage = ref();
+
+  const handleFileUpload = (file: any) => {
+    // Handle the preview logic here
+    fileImage.value = file;
+    console.log(file);
+  };
 
   const onFinish = (values: UserInterface) => {
-    console.log("Success:", values);
-    UserAPI.create(formState.value).then(() => {
+    loading.value = true;
+    const data = {
+      ...values,
+      dateOfBirth: moment(values.dateOfBirth, "DD-MM-YYYY").valueOf(),
+    };
+
+    const formData = new FormData();
+    formData.append(`file`, fileImage.value);
+    formData.append("request", JSON.stringify(data));
+    console.log(fileImage.value);
+
+    UserAPI.create(formData).then(() => {
       router.push("/view-user");
+      loading.value = true;
     });
   };
 </script>

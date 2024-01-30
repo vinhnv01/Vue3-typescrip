@@ -14,8 +14,8 @@
         <a-row style="justify-content: center">
           <!-- cột 1 -->
           <a-col span="12">
-            <a-form-item label="Avatar" name="avatar">
-              <a-input v-model:value="formState.avatar" />
+            <a-form-item label="Họ và tên" name="username">
+              <a-input v-model:value="formState.username" />
             </a-form-item>
           </a-col>
 
@@ -53,8 +53,13 @@
     <a-card style="margin-top: 30px; border-top: 3px solid red">
       <font-awesome-icon icon="rectangle-list" style="font-size: 30px" />
       <a-row>
-        <a-col span="22">
+        <a-col span="19">
           <h1 style="font-size: 23px; font-weight: bold">Danh sách</h1>
+        </a-col>
+        <a-col span="3">
+          <a-button type="primary" @click="addNewUser">
+            <font-awesome-icon icon="file-import" /> Upload File
+          </a-button>
         </a-col>
         <a-col span="2">
           <a-button type="primary" @click="addNewUser">
@@ -124,19 +129,18 @@
 </template>
 
 <script lang="ts" setup>
-  import { h, onMounted, ref, reactive, handleError } from "vue";
+  import { h, onMounted, ref } from "vue";
   import { UserInterface } from "@/types/UserInterface";
   import { UserAPI } from "@/api/UserAPI";
   import { ExclamationCircleOutlined } from "@ant-design/icons-vue";
   import { Modal } from "ant-design-vue";
   import { useRouter } from "vue-router";
 
-
   interface FormStateSearch {
     username: string;
     status: string;
   }
-  const formState = reactive<FormStateSearch>({
+  const formState = ref<FormStateSearch>({
     username: "",
     status: "",
   });

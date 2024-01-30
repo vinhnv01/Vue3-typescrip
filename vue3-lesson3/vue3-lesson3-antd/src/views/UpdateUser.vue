@@ -29,7 +29,7 @@
           >
             <h1 style="font-size: 18px; text-align: center">Ảnh</h1>
             <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuBI1wBFm_CrHfwyqG4qDW2__SAV1IolXA82W34Da3jdTymgeB9qjWW8chkJba5I3ciiw&usqp=CAU"
+              :src="formState.avatar"
               alt=""
               style="width: 200px; height: 200px; border-radius: 50%"
             />
@@ -44,15 +44,6 @@
               <!-- cột 1 -->
               <a-col span="12">
                 <a-form-item
-                  label="Avatar"
-                  name="avatar"
-                  :rules="[
-                    { required: true, message: 'Vui lòng nhập họ và tên!' },
-                  ]"
-                >
-                  <a-input v-model:value="formState.avatar" />
-                </a-form-item>
-                <a-form-item
                   name="dateOfBirth"
                   label="Ngày sinh"
                   :rules="[
@@ -64,6 +55,13 @@
                     value-format="DD-MM-YYYY"
                     style="width: 100%"
                   />
+                </a-form-item>
+                <a-form-item
+                  label="Email"
+                  name="email"
+                  :rules="[{ required: true, message: 'Vui lòng nhập Email!' }]"
+                >
+                  <a-input v-model:value="formState.email" />
                 </a-form-item>
                 <a-form-item
                   label="Địa chỉ"
@@ -132,6 +130,7 @@
   import { UserAPI } from "@/api/UserAPI";
   import { onMounted, ref } from "vue";
   import { useRoute, useRouter } from "vue-router";
+  import moment from "moment";
 
   const router = useRouter();
   const route = useRoute();
@@ -146,12 +145,19 @@
 
   function detailProduct(id: string) {
     UserAPI.getOne(id).then((data) => {
-      formState.value = data.data;
+      formState.value = {
+        ...data.data,
+        dateOfBirth: moment(data.data.dateOfBirth).format("DD-MM-YYYY"),
+      };
     });
   }
 
   const onFinish = (values: UserInterface) => {
-    const update = { ...values, id: userId.value };
+    const update = {
+      ...values,
+      id: userId.value,
+      dateOfBirth: moment(values.dateOfBirth, "DD-MM-YYYY").valueOf(),
+    };
     UserAPI.update(update).then(() => {
       router.push("/view-user");
     });

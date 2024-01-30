@@ -16,7 +16,7 @@ export class UserAPI {
     });
   };
 
-  static create = (data: UserInterface) => {
+  static create = (data: any) => {
     return requestAdmin({
       method: "POST",
       url: `/user`,
